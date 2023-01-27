@@ -10,7 +10,7 @@ import { GenresModule } from './genres/genres.module';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'memory',
-      entities: ['dist/**/*.entity.{.ts,.js}'],
+      entities: ['dist/**/entities/*.entity.js'],
       synchronize: true,
     }),
     AuthorsModule,
