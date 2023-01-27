@@ -1,17 +1,23 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSourceOptions } from 'typeorm';
 
+import { TypeormConfig } from './config/typeorm.config';
 import { AuthorsModule } from './authors/authors.module';
 import { BooksModule } from './books/books.module';
 import { GenresModule } from './genres/genres.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'memory',
-      entities: ['dist/**/entities/*.entity.js'],
-      synchronize: true,
+    ConfigModule.forRoot({
+      load: [TypeormConfig],
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) =>
+        configService.get<DataSourceOptions>('typeorm'),
+      inject: [ConfigService],
     }),
     AuthorsModule,
     BooksModule,
