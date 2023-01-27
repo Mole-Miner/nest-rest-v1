@@ -1,16 +1,19 @@
 import { registerAs } from '@nestjs/config';
-import { DataSourceOptions } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
-export const TypeormConfig = registerAs(
+const dataSourceOptions: DataSourceOptions = {
+  type: 'sqlite',
+  database: 'db/db',
+  entities: ['dist/**/entities/*.entity.js'],
+  synchronize: false,
+  migrations: ['dist/db/migrations/*.js'],
+  migrationsRun: false,
+  logging: true,
+};
+export const typeormConfig = registerAs(
   'typeorm',
-  (): DataSourceOptions => ({
-    type: 'sqlite',
-    database: 'db',
-    entities: ['dist/src/**/entities/*.entity.js'],
-    synchronize: false,
-    migrations: ['dist/src/db/migrations/*.js'],
-    migrationsRun: false,
-    migrationsTableName: 'history',
-    logging: true,
-  }),
+  (): DataSourceOptions => dataSourceOptions,
 );
+
+const dataSource: DataSource = new DataSource(dataSourceOptions);
+export default dataSource;
