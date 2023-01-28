@@ -16,7 +16,7 @@ export class Author {
   @Column({ nullable: true })
   age: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'date' })
   birthday: string;
 
   @Column({ nullable: true })
