@@ -27,17 +27,17 @@ export class GenresController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.genresService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.genresService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGenreDto: UpdateGenreDto) {
-    return this.genresService.update(+id, updateGenreDto);
+  update(@Param('id') id: number, @Body() updateGenreDto: UpdateGenreDto) {
+    return this.genresService.update(id, updateGenreDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.genresService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.genresService.remove(id);
   }
 }
