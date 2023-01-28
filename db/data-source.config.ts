@@ -3,15 +3,15 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 
 const dataSourceOptions: DataSourceOptions = {
   type: 'sqlite',
-  database: 'db/db',
+  database: 'db/db.sqlite',
   entities: ['dist/**/entities/*.entity.js'],
   synchronize: false,
   migrations: ['dist/db/migrations/*.js'],
   migrationsRun: false,
   logging: true,
 };
-export const typeormConfig = registerAs(
-  'typeorm',
+export const dataSourceConfig = registerAs(
+  'sqlite',
   (): DataSourceOptions => dataSourceOptions,
 );
 
