@@ -1,10 +1,4 @@
-import {
-  IsArray,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-  MaxLength,
-} from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator';
 
 export class CreateBookDto {
   @IsString()
@@ -23,6 +17,6 @@ export class CreateBookDto {
   @IsNumber()
   authorId: number;
 
-  @IsArray()
+  @IsNumber({}, { each: true })
   genreIds: number[];
 }

@@ -8,7 +8,7 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       forbidUnknownValues: true, // prevent sqli and xss in class-validator@0.13.2
-      disableErrorMessages: true,
+      disableErrorMessages: false,
       transform: true,
     }),
   );
