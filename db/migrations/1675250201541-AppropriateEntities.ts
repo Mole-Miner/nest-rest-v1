@@ -1,17 +1,17 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Init1675238886971 implements MigrationInterface {
-  name = 'Init1675238886971';
+export class AppropriateEntities1675250201541 implements MigrationInterface {
+  name = 'AppropriateEntities1675250201541';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `CREATE TABLE "author" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "firstName" varchar NOT NULL, "lastName" varchar NOT NULL, "age" integer, "birthday" date, "nationality" varchar)`,
-    );
     await queryRunner.query(
       `CREATE TABLE "genre" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL)`,
     );
     await queryRunner.query(
       `CREATE TABLE "book" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar NOT NULL, "summary" varchar, "pages" integer, "authorId" integer)`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "author" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "firstName" varchar NOT NULL, "lastName" varchar NOT NULL, "age" integer, "birthday" date, "nationality" varchar)`,
     );
     await queryRunner.query(
       `CREATE TABLE "book_genres_genre" ("bookId" integer NOT NULL, "genreId" integer NOT NULL, PRIMARY KEY ("bookId", "genreId"))`,
@@ -33,7 +33,7 @@ export class Init1675238886971 implements MigrationInterface {
     await queryRunner.query(`DROP INDEX "IDX_31d658e0af554165f4598158c5"`);
     await queryRunner.query(`DROP INDEX "IDX_83bd32782d44d9db3d68c3f58c"`);
     await queryRunner.query(
-      `CREATE TABLE "temporary_book_genres_genre" ("bookId" integer NOT NULL, "genreId" integer NOT NULL, CONSTRAINT "FK_31d658e0af554165f4598158c55" FOREIGN KEY ("bookId") REFERENCES "book" ("id") ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT "FK_83bd32782d44d9db3d68c3f58c1" FOREIGN KEY ("genreId") REFERENCES "genre" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION, PRIMARY KEY ("bookId", "genreId"))`,
+      `CREATE TABLE "temporary_book_genres_genre" ("bookId" integer NOT NULL, "genreId" integer NOT NULL, CONSTRAINT "FK_31d658e0af554165f4598158c55" FOREIGN KEY ("bookId") REFERENCES "book" ("id") ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT "FK_83bd32782d44d9db3d68c3f58c1" FOREIGN KEY ("genreId") REFERENCES "genre" ("id") ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY ("bookId", "genreId"))`,
     );
     await queryRunner.query(
       `INSERT INTO "temporary_book_genres_genre"("bookId", "genreId") SELECT "bookId", "genreId" FROM "book_genres_genre"`,
@@ -80,8 +80,8 @@ export class Init1675238886971 implements MigrationInterface {
     await queryRunner.query(`DROP INDEX "IDX_83bd32782d44d9db3d68c3f58c"`);
     await queryRunner.query(`DROP INDEX "IDX_31d658e0af554165f4598158c5"`);
     await queryRunner.query(`DROP TABLE "book_genres_genre"`);
+    await queryRunner.query(`DROP TABLE "author"`);
     await queryRunner.query(`DROP TABLE "book"`);
     await queryRunner.query(`DROP TABLE "genre"`);
-    await queryRunner.query(`DROP TABLE "author"`);
   }
 }

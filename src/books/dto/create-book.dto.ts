@@ -1,13 +1,14 @@
-import { IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator';
+import { IsNumber, IsString, Matches, MaxLength } from 'class-validator';
+import { Transform, TransformFnParams } from 'class-transformer';
 
 export class CreateBookDto {
-  @IsString()
-  @IsNotEmpty()
+  @Matches(/^[a-zA-Z0-9\s]*$/)
+  @Transform(({ value }: TransformFnParams) => value?.trim())
   @MaxLength(32)
   title: string;
 
   @IsString()
-  @IsNotEmpty()
+  @Transform(({ value }: TransformFnParams) => value?.trim())
   @MaxLength(256)
   summary: string;
 

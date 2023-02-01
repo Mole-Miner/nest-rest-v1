@@ -1,32 +1,22 @@
-import {
-  IsAlpha,
-  IsDateString,
-  IsNotEmpty,
-  IsNumber,
-  MaxLength,
-} from 'class-validator';
+import { IsAlpha, IsDateString, IsNumber, MaxLength } from 'class-validator';
 
 export class CreateAuthorDto {
   @IsAlpha()
-  @IsNotEmpty()
   @MaxLength(32)
-  firstName: string;
+  firstname: string;
 
   @IsAlpha()
-  @IsNotEmpty()
   @MaxLength(32)
-  lastName: string;
+  lastname: string;
 
   @IsNumber()
   age: number;
 
   @IsDateString()
-  @IsNotEmpty()
   @MaxLength(24)
-  birthday: string;
+  born: string;
 
   @IsAlpha()
-  @IsNotEmpty()
   @MaxLength(32)
   nationality: string;
 }
