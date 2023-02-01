@@ -8,10 +8,10 @@ export class Author {
   id: number;
 
   @Column()
-  firstName: string;
+  firstname: string;
 
   @Column()
-  lastName: string;
+  lastname: string;
 
   @Column({ nullable: true })
   age: number;
