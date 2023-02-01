@@ -11,9 +11,16 @@ export class BooksService {
   constructor(
     @InjectRepository(Book) private readonly booksRepository: Repository<Book>,
   ) {}
-  create(createBookDto: CreateBookDto): Promise<Book> {
-    const newBook: Book = this.booksRepository.create(createBookDto);
-    return this.booksRepository.save(newBook);
+  async create(createBookDto: CreateBookDto): Promise<Book> {
+    const { genreIds, ...bookData } = createBookDto;
+    const newBook: Book = this.booksRepository.create(bookData);
+    const savedBook: Book = await this.booksRepository.save(newBook);
+    for (const genreId of genreIds) {
+      await this.booksRepository.query(
+        `INSERT INTO book_genres_genre(bookId, genreId) VALUES(${savedBook.id}, ${genreId})`,
+      );
+    }
+    return savedBook;
   }
 
   findAll(): Promise<Book[]> {

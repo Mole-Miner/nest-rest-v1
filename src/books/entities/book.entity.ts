@@ -19,7 +19,7 @@ export class Book {
   title: string;
 
   @Column({ nullable: true })
-  overview: string;
+  summary: string;
 
   @Column({ nullable: true })
   pages: number;
@@ -27,7 +27,7 @@ export class Book {
   @ManyToOne(() => Author, ({ books }: Author) => books)
   author: Author;
 
-  @ManyToMany(() => Genre)
+  @ManyToMany(() => Genre, ({ books }: Genre) => books)
   @JoinTable()
   genres: Genre[];
 }
