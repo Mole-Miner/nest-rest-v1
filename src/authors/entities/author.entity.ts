@@ -17,7 +17,7 @@ export class Author {
   age: number;
 
   @Column({ nullable: true, type: 'date' })
-  birthday: string;
+  born: string;
 
   @Column({ nullable: true })
   nationality: string;

@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AppropriateEntities1675250201541 implements MigrationInterface {
-  name = 'AppropriateEntities1675250201541';
+export class Init1675255917617 implements MigrationInterface {
+  name = 'Init1675255917617';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -11,7 +11,7 @@ export class AppropriateEntities1675250201541 implements MigrationInterface {
       `CREATE TABLE "book" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar NOT NULL, "summary" varchar, "pages" integer, "authorId" integer)`,
     );
     await queryRunner.query(
-      `CREATE TABLE "author" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "firstName" varchar NOT NULL, "lastName" varchar NOT NULL, "age" integer, "birthday" date, "nationality" varchar)`,
+      `CREATE TABLE "author" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "firstname" varchar NOT NULL, "lastname" varchar NOT NULL, "age" integer, "born" date, "nationality" varchar)`,
     );
     await queryRunner.query(
       `CREATE TABLE "book_genres_genre" ("bookId" integer NOT NULL, "genreId" integer NOT NULL, PRIMARY KEY ("bookId", "genreId"))`,

@@ -13,7 +13,6 @@ export class CreateAuthorDto {
   age: number;
 
   @IsDateString()
-  @MaxLength(24)
   born: string;
 
   @IsAlpha()

@@ -1,14 +1,20 @@
-import { IsNumber, IsString, Matches, MaxLength } from 'class-validator';
+import {
+  ArrayNotEmpty,
+  IsNumber,
+  IsString,
+  Matches,
+  MaxLength,
+} from 'class-validator';
 import { Transform, TransformFnParams } from 'class-transformer';
 
 export class CreateBookDto {
-  @Matches(/^[a-zA-Z0-9\s]*$/)
-  @Transform(({ value }: TransformFnParams) => value?.trim())
+  @Matches(/^[a-zA-Z0-9\s]+$/)
+  @Transform(({ value }: TransformFnParams) => value.trim?.())
   @MaxLength(32)
   title: string;
 
   @IsString()
-  @Transform(({ value }: TransformFnParams) => value?.trim())
+  @Transform(({ value }: TransformFnParams) => value.trim?.())
   @MaxLength(256)
   summary: string;
 
@@ -18,6 +24,7 @@ export class CreateBookDto {
   @IsNumber()
   authorId: number;
 
+  @ArrayNotEmpty()
   @IsNumber({}, { each: true })
   genreIds: number[];
 }
