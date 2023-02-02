@@ -20,7 +20,7 @@ export class BooksService {
         (genreId: number) =>
           `INSERT INTO book_genres_genre(bookId, genreId) VALUES(${savedBook.id}, ${genreId})`,
       )
-      .join(';\n')
+      .join('; ')
       .concat(';');
     await this.booksRepository.query(query);
     return savedBook;
