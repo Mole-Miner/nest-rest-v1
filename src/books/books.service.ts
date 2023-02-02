@@ -15,11 +15,14 @@ export class BooksService {
     const { genreIds, ...bookData } = createBookDto;
     const newBook: Book = this.booksRepository.create(bookData);
     const savedBook: Book = await this.booksRepository.save(newBook);
-    for (const genreId of genreIds) {
-      await this.booksRepository.query(
-        `INSERT INTO book_genres_genre(bookId, genreId) VALUES(${savedBook.id}, ${genreId})`,
-      );
-    }
+    const query: string = genreIds
+      .map(
+        (genreId: number) =>
+          `INSERT INTO book_genres_genre(bookId, genreId) VALUES(${savedBook.id}, ${genreId})`,
+      )
+      .join(';\n')
+      .concat(';');
+    await this.booksRepository.query(query);
     return savedBook;
   }
 
