@@ -9,6 +9,7 @@ const dataSourceOptions: DataSourceOptions = {
   migrations: ['dist/db/migrations/*.js'],
   migrationsRun: false,
   logging: true,
+  subscribers: ['dist/**/subscribers/*.subscriber.js'],
 };
 export const dataSourceConfig = registerAs(
   'sqlite',
