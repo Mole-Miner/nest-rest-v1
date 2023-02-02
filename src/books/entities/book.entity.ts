@@ -19,12 +19,14 @@ export class Book {
   title: string;
 
   @Column({ nullable: true })
-  summary: string;
+  overview: string;
 
   @Column({ nullable: true })
   pages: number;
 
-  @ManyToOne(() => Author, ({ books }: Author) => books)
+  @ManyToOne(() => Author, ({ books }: Author) => books, {
+    onDelete: 'CASCADE',
+  })
   author: Author;
 
   @ManyToMany(() => Genre)

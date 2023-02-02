@@ -13,8 +13,9 @@ export class BooksService {
   ) {}
   async create(createBookDto: CreateBookDto): Promise<Book> {
     const { genreIds, ...bookData } = createBookDto;
-    const newBook: Book = this.booksRepository.create(bookData);
-    const savedBook: Book = await this.booksRepository.save(newBook);
+    const savedBook: Book = await this.booksRepository.save(
+      this.booksRepository.create({ ...bookData }),
+    );
     const query: string = genreIds
       .map(
         (genreId: number) =>

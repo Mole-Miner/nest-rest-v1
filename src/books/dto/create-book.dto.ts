@@ -4,8 +4,12 @@ import {
   IsString,
   Matches,
   MaxLength,
+  ValidateNested,
 } from 'class-validator';
-import { Transform, TransformFnParams } from 'class-transformer';
+import { Transform, TransformFnParams, Type } from 'class-transformer';
+
+import { Author } from '../../authors/entities/author.entity';
+import { CreateAuthorDto } from '../../authors/dto/create-author.dto';
 
 export class CreateBookDto {
   @Matches(/^[a-zA-Z0-9\s]+$/)
@@ -16,13 +20,14 @@ export class CreateBookDto {
   @IsString()
   @Transform(({ value }: TransformFnParams) => value.trim?.())
   @MaxLength(256)
-  summary: string;
+  overview: string;
 
   @IsNumber()
   pages: number;
 
-  @IsNumber()
-  authorId: number;
+  @ValidateNested()
+  @Type(() => CreateAuthorDto)
+  author: Author;
 
   @ArrayNotEmpty()
   @IsNumber({}, { each: true })
